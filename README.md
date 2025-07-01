@@ -4,6 +4,7 @@
 
 This is a secure RESTful API built for a **Personal Notes App** as part of the Interswitch Developer Challenge at the University of Ibadan. It demonstrates best practices in authentication, authorization, and API security using **Node.js, Express, MongoDB, and JWT**.
 
+this is the live url = https://notes-api-vpwo.onrender.com
 ---
 
 ## 🚀 Features
