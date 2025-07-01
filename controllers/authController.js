@@ -28,8 +28,8 @@ exports.signup = async (req, res) => {
             return res.status(400).json({ message: "User already exists" });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const createdUser = new User({ email, password: hashedPassword, name });
+        
+        const createdUser = new User({ email, password, name });
         await createdUser.save();
 
         const otp = generateOTP();
@@ -65,9 +65,10 @@ exports.login = async (req, res) => {
         const { email, password } = req.body;
 
         const existingUser = await User.findOne({ email });
-
+       
         if (existingUser && await bcrypt.compare(password, existingUser.password)) {
             const secureInfo = sanitizeUser(existingUser);
+            console.log(existingUser)
             const token = generateToken(secureInfo);
 
             res.cookie('token', token, {
@@ -76,6 +77,7 @@ exports.login = async (req, res) => {
                 httpOnly: true,
                 secure: process.env.PRODUCTION === 'true',
             });
+        
 
             return res.status(200).json(sanitizeUser(existingUser));
         }
