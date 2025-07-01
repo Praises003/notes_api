@@ -15,7 +15,7 @@ exports.createNote = async (req, res) => {
         const newNote = new Note({
             title: data.title,
             content: data.content,
-            user: req.user.userId // Attach logged-in user ID
+            user: req.user._id // Attach logged-in user ID
         });
 
         await newNote.save();
@@ -37,7 +37,7 @@ exports.getAllNotes = async (req, res) => {
 // Fetch all notes for the logged-in user
 exports.getNotes = async (req, res) => {
     try {
-        const notes = await Note.find({ user: req.user.userId });
+        const notes = await Note.find({ user: req.user._id });
         res.status(200).json(notes);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -48,7 +48,7 @@ exports.getNotes = async (req, res) => {
 exports.deleteNote = async (req, res) => {
     try {
         const note = await Note.findById(req.params.id);
-        if (!note || note.user.toString() !== req.user.userId) {
+        if (!note || note.user.toString() !== req.user._id) {
             return res.status(404).json({ message: 'Note not found or unauthorized' });
         }
 
