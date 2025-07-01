@@ -68,7 +68,7 @@ exports.login = async (req, res) => {
        
         if (existingUser && await bcrypt.compare(password, existingUser.password)) {
             const secureInfo = sanitizeUser(existingUser);
-            console.log(existingUser)
+            
             const token = generateToken(secureInfo);
 
             res.cookie('token', token, {

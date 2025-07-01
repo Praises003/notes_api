@@ -6,6 +6,7 @@ exports.verifyToken=async(req,res,next)=>{
     try {
         // extract the token from request cookies
         const {token}=req.cookies
+       
 
         // if token is not there, return 401 response
         if(!token){
@@ -13,7 +14,7 @@ exports.verifyToken=async(req,res,next)=>{
         }
 
         // verifies the token 
-        const decodedInfo=jwt.verify(token,process.env.SECRET_KEY)
+        const decodedInfo=jwt.verify(token,process.env.JWT_SECRET)
 
         // checks if decoded info contains legit details, then set that info in req.user and calls next
         if(decodedInfo){
